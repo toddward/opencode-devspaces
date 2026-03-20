@@ -1,0 +1,46 @@
+schemaVersion: 2.2.2
+metadata:
+  name: opencode-workspace
+  description: DevSpaces workspace with OpenCode AI coding agent (OpenCode Zen)
+  version: 1.0.0
+
+components:
+  - name: tools
+    container:
+      image: registry.redhat.io/devspaces/udi-rhel8:latest
+      memoryRequest: 2Gi
+      memoryLimit: 6Gi
+      cpuRequest: '1'
+      cpuLimit: '4'
+      mountSources: true
+      env:
+        - name: EDITOR
+          value: 'code --wait'
+        - name: SHELL
+          value: /bin/bash
+
+commands:
+  - id: install-opencode
+    exec:
+      component: tools
+      commandLine: |
+        echo "--- Installing OpenCode ---" &&
+        curl -fsSL https://opencode.ai/install | bash &&
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc &&
+        export PATH="$HOME/.local/bin:$PATH" &&
+        echo "--- OpenCode installed: $(opencode --version) ---"
+      workingDir: /projects
+
+  - id: init-opencode
+    exec:
+      component: tools
+      commandLine: |
+        echo "Run 'opencode' to launch the TUI, then:"
+        echo "  /connect  → select 'opencode' → authenticate at opencode.ai/auth"
+        echo "  /models   → pick your model"
+        echo "  /init     → generate AGENTS.md for your project"
+      workingDir: /projects
+
+events:
+  postStart:
+    - install-opencode
