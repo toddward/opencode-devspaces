@@ -29,9 +29,7 @@ commands:
         echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc &&
         export PATH="$HOME/.local/bin:$PATH" &&
         echo "--- OpenCode installed: $(opencode --version) ---" &&
-        echo "--- Installing OpenCode VS Code extension ---" &&
-        code --install-extension sst-dev.opencode --force &&
-        echo "--- Done ---"
+        echo "--- Installing OpenCode VS Code extension ---"
       workingDir: /projects
 
   - id: init-opencode
