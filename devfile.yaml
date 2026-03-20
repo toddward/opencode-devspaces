@@ -28,8 +28,7 @@ commands:
         curl -fsSL https://opencode.ai/install | bash &&
         echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc &&
         export PATH="$HOME/.local/bin:$PATH" &&
-        echo "--- OpenCode installed: $(opencode --version) ---" &&
-        echo "--- Installing OpenCode VS Code extension ---"
+        echo "--- OpenCode installed: $(opencode --version) ---"
       workingDir: /projects
 
   - id: init-opencode
